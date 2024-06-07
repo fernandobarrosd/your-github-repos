@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-        <header className="flex flex-row-reverse bg-purple-600 p-4">
+        <header className="flex justify-center bg-purple-600 p-4">
           <nav className="flex gap-4">
             <Link href="https://github.com/fernandobarrosd">
               <GithubIcon/>
