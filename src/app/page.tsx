@@ -1,6 +1,13 @@
+import { getServerSession } from "next-auth";
 import { LoginWithGithubButton } from "./components/LoginWithGithubButton";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    return redirect("/repos");
+  }
   return (
     <main className="flex flex-col h-screen items-center justify-center">
       <h1 className="text-3xl font-bold text-purple-800 max-w-56 text-center">
