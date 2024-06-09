@@ -18,7 +18,7 @@ export function GithubRepositoryItem({ name } : GithubRepositoryItemProps) {
             <Link href="" 
             className="text-xs bg-purple-600 mt-2 p-2 rounded-md
              text-white font-bold">
-                Show more
+                Veja mais
             </Link>
         </li>
     )
