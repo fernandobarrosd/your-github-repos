@@ -5,12 +5,16 @@ import { LinkedinIcon } from "./LinkedinIcon";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Image from "next/image";
+import { LogoutButton } from "./LogoutButton";
 
 export async function Header() {
     const session = await getServerSession(authOptions);
     return (
         <header className="flex items-center justify-center bg-purple-600 p-4
         relative">
+          {session && (
+            <LogoutButton className="absolute left-5"/>
+          )}
           <nav className="flex gap-4">
             <Link href="https://github.com/fernandobarrosd">
               <GithubIcon/>
