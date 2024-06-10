@@ -18,7 +18,7 @@ export function GithubReposList({ initialRepos } : GithubReposListProps) {
         const searchValue = formData.get("search-value")?.toString();
 
         if (searchValue?.length) {
-            fetch(`https://api.github.com/search/repositories?q=${searchValue}`, {
+            fetch(`https://api.github.com/search/repositories?q=${searchValue}&per_page=20&page=1`, {
                 headers: {
                     "Authorization": `Bearer ${session?.accessToken}`
                 }
@@ -29,7 +29,7 @@ export function GithubReposList({ initialRepos } : GithubReposListProps) {
     }
     async function handleInputChange(inputValue: string) {
         if (!inputValue.length) {
-            const response = await fetch("https://api.github.com/user/repos", {
+            const response = await fetch("https://api.github.com/user/repos?per_page=20&page=1", {
                 headers: {
                     "Authorization": `Bearer ${session?.accessToken}`
                 }
@@ -52,9 +52,12 @@ export function GithubReposList({ initialRepos } : GithubReposListProps) {
             </button>
         </form>
         <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 mb-8
-        sm:grid-cols-3 lg:grid-cols-6">
-            {repos.map(({ id, name, owner: { login: ownerName } } ) => (
-                <GithubRepositoryItem key={id} name={`${ownerName}/${name}`}/>
+        sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+            {repos.map(({ id, name, full_name, owner: { login: ownerName } } ) => (
+                <GithubRepositoryItem key={id} repository={{
+                    name,
+                    full_name
+                }}/>
             ))}
         </ul>
         </>
