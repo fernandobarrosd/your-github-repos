@@ -1,14 +1,11 @@
 import { GithubIcon } from "@/app/components/GithubIcon";
-import { GithubRepositoryType } from "@/types/GithubRepositoryType";
 import Link from "next/link";
 
 type GithubRepositoryItemProps = {
-    repository: Omit<GithubRepositoryType, 
-"owner" | "private" | "language" | "id">
+    fullName: string
 }
 
-export function GithubRepositoryItem({ repository: { name, full_name: fullName } } 
-    : GithubRepositoryItemProps) {
+export function GithubRepositoryItem({ fullName } : GithubRepositoryItemProps) {
     return (
         <li className="w-32 flex flex-col items-center">
             <div className="bg-purple-600 h-20 flex justify-center items-center 
@@ -16,9 +13,9 @@ export function GithubRepositoryItem({ repository: { name, full_name: fullName }
                 <GithubIcon width={24} heigth={24}/>
             </div>
             <p className="mt-2 text-xs w-full text-center">
-                {fullName}
+                {`${fullName}`}
             </p>
-            <Link href={`/repos/${name}`} 
+            <Link href={`/repos/${fullName.replace("/", "-")}`} 
             className="text-xs bg-purple-600 mt-2 p-2 rounded-md
              text-white font-bold">
                 Veja mais
