@@ -53,11 +53,11 @@ export function GithubReposList({ initialRepos } : GithubReposListProps) {
         </form>
         <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 mb-8
         sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
-            {repos.map(({ id, name, full_name, owner: { login: ownerName } } ) => (
-                <GithubRepositoryItem key={id} repository={{
-                    name,
-                    full_name
-                }}/>
+            {repos.map(({ id, full_name} ) => (
+                <GithubRepositoryItem
+                key={id}
+                fullName={full_name}
+                />
             ))}
         </ul>
         </>
