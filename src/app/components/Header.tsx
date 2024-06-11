@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { GithubIcon } from "./GithubIcon";
-import { TwitterXIcon } from "./TwitterXIcon";
-import { LinkedinIcon } from "./LinkedinIcon";
+import { GithubIcon } from "./icons/GithubIcon";
+import { TwitterXIcon } from "./icons/TwitterXIcon";
+import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Image from "next/image";
