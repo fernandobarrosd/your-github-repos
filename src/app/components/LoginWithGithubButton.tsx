@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { GithubIcon } from "./GithubIcon";
+import { GithubIcon } from "./icons/GithubIcon";
 
 export function LoginWithGithubButton() {
     function handleLoginWithGithub() {
