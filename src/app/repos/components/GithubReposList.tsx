@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchIcon } from "@/app/components/SearchIcon";
+import { SearchIcon } from "@/app/components/icons/SearchIcon";
 import { GithubRepositoryItem } from "./GithubRepositoryItem";
 import { useState } from "react";
 import { GithubRepositoryType } from "@/types/GithubRepositoryType";
@@ -51,7 +51,7 @@ export function GithubReposList({ initialRepos } : GithubReposListProps) {
                 <SearchIcon className="mr-2"/>
             </button>
         </form>
-        <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 mb-8
+        <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 mb-8
         sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
             {repos.map(({ id, full_name} ) => (
                 <GithubRepositoryItem
