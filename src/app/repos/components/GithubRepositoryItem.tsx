@@ -1,4 +1,4 @@
-import { GithubIcon } from "@/app/components/GithubIcon";
+import { GithubIcon } from "@/app/components/icons/GithubIcon";
 import Link from "next/link";
 
 type GithubRepositoryItemProps = {
