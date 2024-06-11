@@ -3,14 +3,16 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { GithubRepositoryType } from "@/types/GithubRepositoryType";
 import { GithubReposList } from "./components/GithubReposList";
+import { GITHUB_BASE_URL } from "@/variables";
 
 
 export default async function Repos() {
     const session = await getServerSession(authOptions);
+    
     if (!session) {
         return redirect("/");
     }
-    const response = await fetch("https://api.github.com/user/repos?per_page=20&page=1", {
+    const response = await fetch(`${GITHUB_BASE_URL}/user/repos?per_page=20&page=1`, {
         headers: {
             "Authorization": `Bearer ${session.accessToken}`
         }
