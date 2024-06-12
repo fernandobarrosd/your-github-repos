@@ -5,24 +5,16 @@ import Link from "next/link";
 
 type GithubRepositoryItemProps = {
     fullName: string;
-    ownerImage: string;
 }
 
-export function GithubRepositoryItem({ fullName, ownerImage } : GithubRepositoryItemProps) {
+export function GithubRepositoryItem({ fullName } : GithubRepositoryItemProps) {
     const { data: session } = useSession();
 
     return (
         <li className="w-32 flex flex-col items-center">
             <div className="bg-purple-600 h-20 flex justify-center items-center 
             rounded-md w-full">
-                {session?.user?.image === ownerImage ? (
-                    <GithubIcon width={24} heigth={24}/>
-                ) : (
-                    <RoundedImage src={ownerImage} size={50}
-                    alt="Repository owner image"
-                    className="rounded-full"
-                    priority/>
-                )}
+                <GithubIcon width={24} heigth={24}/>
             </div>
             <p className="mt-2 text-xs w-full text-center">
                 {`${fullName}`}
