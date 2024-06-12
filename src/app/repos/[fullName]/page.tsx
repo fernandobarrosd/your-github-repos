@@ -8,7 +8,6 @@ import { GithubLanguagesList } from "./components/GithubLanguagesList";
 import { ContributorsList } from "./components/ContributorsList";
 import { RoundedImage } from "@/app/components/RoundedImage";
 import { HouseIcon } from "@/app/components/icons/HouseIcon";
-import { GithubSingleLanguage } from "./components/GithubSingleLanguage";
 import { Metadata } from "next";
 
 type RepoInfoProps = {
@@ -71,15 +70,8 @@ export default async function RepoInfo({ params: { fullName } } : RepoInfoProps)
                     {repository.description}
             </span>
             )}
-            {languages.length <= 1 ? (
-                <GithubSingleLanguage language={languages[0]}/>
-            ) : languages.length <= 2 ? (
-                <GithubLanguagesList languages={languages}
-                cols={2}/>
-            ) : (
-                <GithubLanguagesList languages={languages}
-                cols={3}/>
-            )}
+            <GithubLanguagesList languages={languages}/>
+            
             
             {constributors.length != 1 && (
                 <ContributorsList constributors={constributors}/>
