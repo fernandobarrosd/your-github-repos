@@ -1,16 +1,28 @@
+import { RoundedImage } from "@/app/components/RoundedImage";
 import { GithubIcon } from "@/app/components/icons/GithubIcon";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 type GithubRepositoryItemProps = {
-    fullName: string
+    fullName: string;
+    ownerImage: string;
 }
 
-export function GithubRepositoryItem({ fullName } : GithubRepositoryItemProps) {
+export function GithubRepositoryItem({ fullName, ownerImage } : GithubRepositoryItemProps) {
+    const { data: session } = useSession();
+
     return (
         <li className="w-32 flex flex-col items-center">
             <div className="bg-purple-600 h-20 flex justify-center items-center 
             rounded-md w-full">
-                <GithubIcon width={24} heigth={24}/>
+                {session?.user?.image === ownerImage ? (
+                    <GithubIcon width={24} heigth={24}/>
+                ) : (
+                    <RoundedImage src={ownerImage} size={50}
+                    alt="Repository owner image"
+                    className="rounded-full"
+                    priority/>
+                )}
             </div>
             <p className="mt-2 text-xs w-full text-center">
                 {`${fullName}`}
