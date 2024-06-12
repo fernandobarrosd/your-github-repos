@@ -82,13 +82,13 @@ export function GithubReposList({ initialRepos } : GithubReposListProps) {
         ) : (
             <ul className="mt-12 grid
             grid-cols-2 min-[550px]:grid-cols-3
-            md:grid-cols-4
-            lg:grid-cols-5
+            sm:grid-cols-4
+            lg:grid-cols-6
+            xl:grid-cols-7
             gap-x-6 gap-y-8 mb-8">
             {repos.map(({ id, full_name, owner } ) => (
                 <GithubRepositoryItem
                 key={id}
-                ownerImage={owner.avatar_url}
                 fullName={full_name}
                 />
             ))}
