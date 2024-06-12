@@ -4,7 +4,11 @@ import { redirect } from "next/navigation";
 import { GithubRepositoryType } from "@/types/GithubRepositoryType";
 import { GithubReposList } from "./components/GithubReposList";
 import { GITHUB_BASE_URL } from "@/variables";
+import { Metadata } from "next";
 
+export const metadata : Metadata = {
+    title: "Your Github Repos - Repos",
+}
 
 export default async function Repos() {
     const session = await getServerSession(authOptions);
