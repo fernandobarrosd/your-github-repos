@@ -4,8 +4,8 @@ import { TwitterXIcon } from "./icons/TwitterXIcon";
 import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import Image from "next/image";
 import { LogoutButton } from "./LogoutButton";
+import { RoundedImage } from "./RoundedImage";
 
 export async function Header() {
     const session = await getServerSession(authOptions);
@@ -28,9 +28,10 @@ export async function Header() {
             </Link>
           </nav>
           {session && (
-            <Image width={35} height={35} src={session.user?.image || ""}
+            <RoundedImage size={35} 
+            src={session.user?.image || ""}
             alt="User profile image"
-            className="absolute right-8 rounded-full"/>
+            className="absolute right-8"/>
           )}
         </header>
     )
