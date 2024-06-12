@@ -1,10 +1,15 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { GithubRepositoryType } from "@/types/GithubRepositoryType";
+import { GithubUserType } from "@/types/GithubUserType";
 import { GITHUB_BASE_URL } from "@/variables";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import Link from "next/link";
-
+import { GithubLanguagesList } from "./components/GithubLanguagesList";
+import { ContributorsList } from "./components/ContributorsList";
+import { RoundedImage } from "@/app/components/RoundedImage";
+import { HouseIcon } from "@/app/components/icons/HouseIcon";
+import { GithubSingleLanguage } from "./components/GithubSingleLanguage";
+import { Metadata } from "next";
 
 type RepoInfoProps = {
     params: {
@@ -12,22 +17,35 @@ type RepoInfoProps = {
     }
 }
 
+export function generateMetadata({ params: { fullName } } : RepoInfoProps) : Metadata {
+    return {
+        title: `Your Github Repos - ${fullName}`,
+    }
+}
+
+
 export default async function RepoInfo({ params: { fullName } } : RepoInfoProps) {
     const session = await getServerSession(authOptions);
+
     const newFullName = fullName.replace("-", "/");
 
+    const headers = {
+        "Authorization": `Bearer ${session?.accessToken}`
+    }
+
     const response = await fetch(`${GITHUB_BASE_URL}/repos/${newFullName}`, {
-        headers: {
-            "Authorization": `Bearer ${session?.accessToken}`
-        }
+        headers
     });
    
     const repository = await response.json() as GithubRepositoryType;
     const response2 = await fetch(repository.languages_url, {
-        headers: {
-            "Authorization": `Bearer ${session?.accessToken}`
-        }
+        headers
     });
+    const response3 = await fetch(repository.contributors_url, {
+        headers
+    });
+
+    const constributors = await response3.json() as GithubUserType[];
     const languages =  Object.keys(await response2.json());
 
     return (
@@ -35,36 +53,37 @@ export default async function RepoInfo({ params: { fullName } } : RepoInfoProps)
             <Link href="/repos"
             className="bg-purple-600 absolute left-5 p-2 rounded-md
             text-white">
-                Voltar
+                <HouseIcon/>
             </Link>
-            <Image src={repository.owner.avatar_url}
-            className="mt-4 rounded-full sm:w-[140px] sm:h-[140px]"
-            width={100} height={100} alt="Github owner profile"/>
-            <span className="text-sm bg-purple-600 text-white rounded-md mt-4
+            
+            <RoundedImage src={repository.owner.avatar_url}
+            className="mt-4 bg-purple-700 p-6"
+            size={120} alt="Github owner profile"/>
+
+            <Link href={repository.html_url} 
+            className="text-sm bg-purple-600 text-white rounded-md mt-4
             p-2 font-bold">
-                {repository.name}
+                {repository.full_name}
+            </Link>
+            {repository.description && (
+                <span className="text-sm bg-purple-800 text-white rounded-md mt-2
+                p-2 max-w-72 text-center">
+                    {repository.description}
             </span>
-            {languages.length === 1 ? (
-                <span className="text-sm bg-purple-600 text-white rounded-md mt-8
-                p-2 max-w-72 text-center">{languages[0]}</span>
-                
+            )}
+            {languages.length <= 1 ? (
+                <GithubSingleLanguage language={languages[0]}/>
+            ) : languages.length <= 2 ? (
+                <GithubLanguagesList languages={languages}
+                cols={2}/>
             ) : (
-                <ul className="grid grid-cols-3 gap-2 mt-8">
-                    {languages.map(language => (
-                       <li
-                       className="text-sm bg-purple-900 text-white rounded-md
-                        p-2 max-w-72 text-center" 
-                       key={language}>{language}</li>
-                    ))}
-                </ul>
+                <GithubLanguagesList languages={languages}
+                cols={3}/>
             )}
             
-            
-            <span className="text-sm bg-purple-800 text-white rounded-md mt-8
-                p-2 max-w-72 text-center">
-                    {repository.description ? repository.description :
-                    "Sem descrição"}
-            </span>
+            {constributors.length != 1 && (
+                <ContributorsList constributors={constributors}/>
+            )}
         </main>
     );
 }
