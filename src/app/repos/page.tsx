@@ -1,10 +1,10 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { GithubRepositoryType } from "@/types/GithubRepositoryType";
 import { GithubReposList } from "./components/GithubReposList";
 import { GITHUB_BASE_URL } from "@/variables";
 import { Metadata } from "next";
+import { authOptions } from "../api/auth/authOptions";
 
 export const metadata : Metadata = {
     title: "Your Github Repos - Repos",

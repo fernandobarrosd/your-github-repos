@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { GithubRepositoryType } from "@/types/GithubRepositoryType";
 import { GithubUserType } from "@/types/GithubUserType";
 import { GITHUB_BASE_URL } from "@/variables";
@@ -9,6 +8,7 @@ import { ContributorsList } from "./components/ContributorsList";
 import { RoundedImage } from "@/app/components/RoundedImage";
 import { HouseIcon } from "@/app/components/icons/HouseIcon";
 import { Metadata } from "next";
+import { authOptions } from "@/app/api/auth/authOptions";
 
 type RepoInfoProps = {
     params: {
@@ -21,7 +21,6 @@ export function generateMetadata({ params: { fullName } } : RepoInfoProps) : Met
         title: `Your Github Repos - ${fullName}`,
     }
 }
-
 
 export default async function RepoInfo({ params: { fullName } } : RepoInfoProps) {
     const session = await getServerSession(authOptions);

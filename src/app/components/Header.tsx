@@ -3,9 +3,9 @@ import { GithubIcon } from "./icons/GithubIcon";
 import { TwitterXIcon } from "./icons/TwitterXIcon";
 import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { LogoutButton } from "./LogoutButton";
 import { RoundedImage } from "./RoundedImage";
+import { authOptions } from "../api/auth/authOptions";
 
 export async function Header() {
     const session = await getServerSession(authOptions);

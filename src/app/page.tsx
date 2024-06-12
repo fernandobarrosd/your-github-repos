@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { LoginWithGithubButton } from "./components/LoginWithGithubButton";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { authOptions } from "./api/auth/authOptions";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
