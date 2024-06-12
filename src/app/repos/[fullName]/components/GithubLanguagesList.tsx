@@ -1,11 +1,10 @@
 type GithubLanguagesListProps = {
-    cols: number;
     languages: string[];
 }
 
-export function GithubLanguagesList({ cols, languages } : GithubLanguagesListProps) {
+export function GithubLanguagesList({ languages } : GithubLanguagesListProps) {
     return (
-        <ul className={`grid grid-cols-${cols} gap-2 mt-4`}>
+        <ul className="grid grid-cols-2 gap-2 mt-4">
             {languages.map(language => (
             <li
             className="text-sm bg-purple-900 text-white rounded-md
