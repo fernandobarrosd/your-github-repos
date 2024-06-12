@@ -2,8 +2,25 @@
 
 Um local onde voce poderá pesquisar mais sobre os repositórios seus ou de outras pessoas.
 
-## Por que criar?
+## Por que foi criado?
 Pra ter um local onde você poderá ver os repositórios seus ou de outras pessoas sem ter que estar no Github.
+
+## Telas
+
+- Boas vindas
+<img src="./screenshots/your-github-repos-screenshot-1.png" width="600">
+
+<br>
+<br>
+
+- Inicio
+<img src="./screenshots/your-github-repos-screenshot-2.png" width="600">
+
+<br>
+<br>
+
+- Informações do repositório
+<img src="./screenshots/your-github-repos-screenshot-3.png" width="600">
 
 ## Tecnlogias usadas
 
