@@ -6,12 +6,16 @@ import { getServerSession } from "next-auth";
 import { LogoutButton } from "./LogoutButton";
 import { RoundedImage } from "./RoundedImage";
 import { authOptions } from "../api/auth/authOptions";
+import { ToogleTheme } from "./ToogleTheme/ToogleTheme";
+import { cookies } from "next/headers";
 
 export async function Header() {
     const session = await getServerSession(authOptions);
+    const theme = cookies().get("theme");
+
     return (
-        <header className="flex items-center justify-center bg-purple-600 p-4
-        relative">
+        <header className={`flex items-center justify-center bg-purple-600 p-4
+        relative ${theme?.value === "dark" && "dark:bg-purple-950"}`}>
           {session && (
             <LogoutButton className="absolute left-5"/>
           )}
@@ -27,6 +31,7 @@ export async function Header() {
               <LinkedinIcon/>
             </Link>
           </nav>
+          <ToogleTheme/>
           {session && (
             <RoundedImage size={35} 
             src={session.user?.image || ""}
