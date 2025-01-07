@@ -1,21 +1,16 @@
 "use server";
 
-import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { THEME_COOKIE_KEY } from "@/app/constants";
+import { getCookie, setCookie } from "cookies-next/server";
 import { cookies } from "next/headers";
 
 export async function changeTheme() {
-    const nextCookies = cookies();
-    const theme = nextCookies.get("theme");
+    const theme = await getCookie(THEME_COOKIE_KEY, { cookies }) || "light";
     
-    if (theme) {
-        if (theme?.value === "dark") {
-            nextCookies.set("theme", "light");
-        }
-        else {
-            nextCookies.set("theme", "dark");
-        }
+    if (theme === "dark") {
+        await setCookie(THEME_COOKIE_KEY, "light", { cookies });
     }
     else {
-        nextCookies.set("theme", "dark");
+        await setCookie(THEME_COOKIE_KEY, "dark", { cookies });
     }
 }

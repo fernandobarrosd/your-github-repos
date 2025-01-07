@@ -1,11 +1,11 @@
 "use client";
 
+import { getCookie } from "cookies-next/client";
 import { signOut } from "next-auth/react"
-import { useCookies } from "next-client-cookies";
+import { THEME_COOKIE_KEY } from "../constants";
 
 export function LogoutButton({ className }: { className?: string }) {
-    const cookies = useCookies();
-    const theme = cookies.get("theme");
+    const theme = getCookie(THEME_COOKIE_KEY) || "light";
 
     function handleLogout() {
         signOut({ callbackUrl: "/" });

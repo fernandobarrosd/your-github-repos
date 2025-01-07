@@ -8,14 +8,16 @@ import { RoundedImage } from "./RoundedImage";
 import { authOptions } from "../api/auth/authOptions";
 import { ToogleTheme } from "./ToogleTheme/ToogleTheme";
 import { cookies } from "next/headers";
+import { getCookie } from "cookies-next/server";
+import { THEME_COOKIE_KEY } from "../constants";
 
 export async function Header() {
     const session = await getServerSession(authOptions);
-    const theme = cookies().get("theme");
+    const theme = await getCookie(THEME_COOKIE_KEY, { cookies }) || "light";
 
     return (
         <header className={`flex items-center justify-center bg-purple-600 p-4
-        relative ${theme?.value === "dark" && "dark:bg-purple-950"}`}>
+        relative ${theme === "dark" && "dark:bg-purple-950"}`}>
           {session && (
             <LogoutButton className="absolute left-5"/>
           )}

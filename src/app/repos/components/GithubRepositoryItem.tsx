@@ -1,7 +1,6 @@
-import { RoundedImage } from "@/app/components/RoundedImage";
 import { GithubIcon } from "@/app/components/icons/GithubIcon";
-import { useSession } from "next-auth/react";
-import { useCookies } from "next-client-cookies";
+import { THEME_COOKIE_KEY } from "@/app/constants";
+import { getCookie } from "cookies-next/client";
 import Link from "next/link";
 
 type GithubRepositoryItemProps = {
@@ -9,9 +8,8 @@ type GithubRepositoryItemProps = {
 }
 
 export function GithubRepositoryItem({ fullName } : GithubRepositoryItemProps) {
-    const { data: session } = useSession();
-    const cookies = useCookies();
-    const theme = cookies.get("theme");
+    const theme = getCookie(THEME_COOKIE_KEY) || "light";
+
     return (
         <li className="w-32 flex flex-col items-center">
             <div className="bg-purple-600 h-20 flex justify-center items-center 
