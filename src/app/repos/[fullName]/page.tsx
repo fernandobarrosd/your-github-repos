@@ -1,8 +1,8 @@
-import { GithubRepositoryType } from "@/types/GithubRepositoryType";
-import { GithubUserType } from "@/types/GithubUserType";
-import { GITHUB_BASE_URL } from "@/variables";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { GithubRepositoryType } from "@/types/GithubRepositoryType";
+import { GithubUserType } from "@/types/GithubUserType";
+import { GITHUB_BASE_URL } from "@/app/constants";
 import { GithubLanguagesList } from "../../components/GithubLanguagesList";
 import { ContributorsList } from "../../components/ContributorsList";
 import { RoundedImage } from "@/app/components/RoundedImage";
@@ -22,6 +22,7 @@ export function generateMetadata({ params: { fullName } } : RepoInfoProps) : Met
     }
 }
 
+
 export default async function RepoInfo({ params: { fullName } } : RepoInfoProps) {
     const session = await getServerSession(authOptions);
 
@@ -34,17 +35,21 @@ export default async function RepoInfo({ params: { fullName } } : RepoInfoProps)
     const response = await fetch(`${GITHUB_BASE_URL}/repos/${newFullName}`, {
         headers
     });
-   
-    const repository = await response.json() as GithubRepositoryType;
-    const response2 = await fetch(repository.languages_url, {
-        headers
-    });
-    const response3 = await fetch(repository.contributors_url, {
-        headers
-    });
 
-    const constributors = await response3.json() as GithubUserType[];
-    const languages =  Object.keys(await response2.json());
+    const repository = await response.json() as GithubRepositoryType;
+
+    const result = await Promise.all([
+        fetch(repository.contributors_url, {
+            headers
+        }).then(response => response.json() as Promise<GithubUserType[]>),
+
+        fetch(repository.languages_url, {
+            headers
+        }).then(response => response.json() as Promise<Record<string, number>>),
+    ]);
+
+    const [ constributors, languages ] = result;
+    const languagesKeys = Object.keys(languages);
 
     return (
         <main className="mt-4 flex max-w-full flex-col items-center">
@@ -69,7 +74,7 @@ export default async function RepoInfo({ params: { fullName } } : RepoInfoProps)
                     {repository.description}
             </span>
             )}
-            <GithubLanguagesList languages={languages}/>
+            <GithubLanguagesList languages={languagesKeys}/>
             
             
             {constributors.length != 1 && (
